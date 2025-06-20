@@ -1,0 +1,29 @@
+:root {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+:focus-visible {
+  outline-offset: 4px;
+}
+
+body {
+  font-family: Ubuntu, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+button {
+  display: block;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
