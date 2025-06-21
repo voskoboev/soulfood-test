@@ -1,10 +1,12 @@
 <script lang="ts" setup>
-import { useId } from "vue";
+import { ref, useId } from "vue";
+import { useAuthStore } from "@/stores/auth.store";
 import AppFormControl from "@/components/AppFormControl/AppFormControl.vue";
+import styles from "@/components/AppForm/AppForm.module.scss";
+import type { TFormControl } from "@/types/TFormControl.types";
+// import { watchEffect } from "vue";
 
-// defineProps<IAppFormProps>();
-
-const FORM_CONTROLS = [
+const FORM_CONTROLS: TFormControl[] = [
   {
     type: "text",
     label: "Имя",
@@ -66,35 +68,32 @@ const FORM_CONTROLS = [
         "Регистрация возможна при согласии с политикой конфиденциальности",
     },
   },
-  {
-    label: "Отправить форму",
-    type: "submit",
-  },
 ];
 
-const submitForm = () => {};
+const authStore = useAuthStore();
+
+const isSubmitButtonDisabled = ref(false);
+
+// watchEffect(() => {
+//   isSubmitButtonDisabled.value
+// })
+
+const handleOnSubmit = () => {
+  const newUser = {};
+
+  authStore.handleRegisterUser(newUser);
+};
 </script>
 
 <template>
-  <form :class="styles.form" @submit.prevent="submitForm">
+  <form :class="styles.form" @submit.prevent="handleOnSubmit" novalidate>
     <AppFormControl
       v-for="control in FORM_CONTROLS"
       :control="control"
       :key="useId()"
     />
+    <AppButton type="submit" :disabled="isSubmitButtonDisabled">
+      Отправить форму
+    </AppButton>
   </form>
 </template>
-
-<style lang="scss" module="styles">
-@use "@/assets/styles/vars.scss";
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-  border: 1px solid vars.$color-secondary;
-  border-radius: vars.$rounding;
-  box-shadow: 4px 4px 8px 0px rgba(vars.$color-dark, 0.2);
-}
-</style>

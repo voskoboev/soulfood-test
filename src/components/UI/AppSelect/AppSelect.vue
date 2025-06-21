@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import { useId } from "vue";
+import styles from "@/components/UI/AppSelect/AppSelect.module.scss";
+import type { IAppSelectProps } from "./AppSelect.types";
 
-const props = defineProps<{
-  control: any;
-}>();
+const props = defineProps<IAppSelectProps>();
 
 const id = useId();
 const label = props.control.label;
 const options = props.control.options;
-const validationMessage = props.control.validation.message;
-
 const hasValidation = props.control.validation;
+const validationMessage = props.control.validation?.message;
+
 </script>
 
 <template>
@@ -33,29 +33,3 @@ const hasValidation = props.control.validation;
     </div>
   </div>
 </template>
-
-<style lang="scss" module="styles">
-@use "@/assets/styles/vars.scss";
-
-.wrapper {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.select {
-  padding: 10px 20px;
-  border: 1px solid vars.$color-tertiary;
-  border-radius: vars.$rounding;
-  cursor: pointer;
-}
-
-.placeholderOption {
-  display: none;
-}
-
-.errorMessage {
-  color: vars.$color-error;
-}
-</style>

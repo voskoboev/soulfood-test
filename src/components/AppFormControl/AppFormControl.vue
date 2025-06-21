@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { computed } from "vue";
+import type { IAppFormControlProps } from "@/components/AppFormControl/AppFormControl.types";
 
-const props = defineProps<{
-  control: any;
-}>();
+const props = defineProps<IAppFormControlProps>();
 
 const isTextInput = computed(() => props.control.type === "text");
 const isEmailInput = computed(() => props.control.type === "email");
@@ -21,7 +20,3 @@ const isSubmitButton = computed(() => props.control.type === "submit");
   <AppCheckbox v-else-if="isCheckbox" :control="props.control" />
   <AppButton v-else-if="isSubmitButton" :control="props.control" />
 </template>
-
-<style lang="scss" module="styles">
-@use "@/assets/styles/vars.scss";
-</style>

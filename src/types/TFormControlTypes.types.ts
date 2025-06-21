@@ -1,4 +1,4 @@
-export type TAppFormControlTypes =
+export type TFormControlTypes =
   | "text"
   | "email"
   | "password"

@@ -1,18 +1,12 @@
 export function useValidation() {
-  const validateLogin = () => {};
-
-  const validateEmail = () => {};
-
-  const validatePassword = () => {};
+  const validateInput = () => {};
 
   const validateSelect = () => {};
 
   const validateCheckbox = () => {};
 
   return {
-    validateLogin,
-    validateEmail,
-    validatePassword,
+    validateInput,
     validateSelect,
     validateCheckbox,
   };

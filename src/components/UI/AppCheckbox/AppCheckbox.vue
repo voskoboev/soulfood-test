@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { useId } from "vue";
+import styles from "@/components/UI/AppCheckbox/AppCheckbox.module.scss";
+import type { IAppCheckboxProps } from "./AppCheckbox.types";
 
-const props = defineProps<{
-  control: any;
-}>();
+const props = defineProps<IAppCheckboxProps>();
 
 const id = useId();
 
@@ -11,7 +11,7 @@ const label = props.control.label;
 const type = props.control.type;
 const isChecked = props.control.checked;
 const hasValidation = props.control.validation;
-const validationMessage = props.control.validation.message;
+const validationMessage = props.control.validation?.message;
 </script>
 
 <template>
@@ -25,24 +25,3 @@ const validationMessage = props.control.validation.message;
     </div>
   </div>
 </template>
-
-<style lang="scss" module="styles">
-@use "@/assets/styles/vars.scss";
-
-.wrapper {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.input {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-}
-
-.errorMessage {
-  color: vars.$color-error;
-}
-</style>

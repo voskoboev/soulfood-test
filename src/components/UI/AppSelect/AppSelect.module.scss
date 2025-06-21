@@ -1,0 +1,23 @@
+@use "@/assets/styles/vars.styles.scss";
+
+.wrapper {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.select {
+  padding: 10px 20px;
+  border: 1px solid vars.$color-tertiary;
+  border-radius: vars.$rounding;
+  cursor: pointer;
+}
+
+.placeholderOption {
+  display: none;
+}
+
+.errorMessage {
+  color: vars.$color-error;
+}
