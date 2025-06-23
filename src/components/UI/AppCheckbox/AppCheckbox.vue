@@ -3,15 +3,15 @@ import { useId } from "vue";
 import styles from "@/components/UI/AppCheckbox/AppCheckbox.module.scss";
 import type { IAppCheckboxProps } from "./AppCheckbox.types";
 
-const props = defineProps<IAppCheckboxProps>();
+const { control } = defineProps<IAppCheckboxProps>();
 
 const id = useId();
 
-const label = props.control.label;
-const type = props.control.type;
-const isChecked = props.control.checked;
-const hasValidation = props.control.validation;
-const validationMessage = props.control.validation?.message;
+const label = control.label;
+const type = control.type;
+const isChecked = control.checked;
+const hasValidation = control.validation;
+const validationMessage = control.validation?.message;
 </script>
 
 <template>

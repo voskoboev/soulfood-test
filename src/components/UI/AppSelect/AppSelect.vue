@@ -3,14 +3,13 @@ import { useId } from "vue";
 import styles from "@/components/UI/AppSelect/AppSelect.module.scss";
 import type { IAppSelectProps } from "./AppSelect.types";
 
-const props = defineProps<IAppSelectProps>();
+const { control } = defineProps<IAppSelectProps>();
 
 const id = useId();
-const label = props.control.label;
-const options = props.control.options;
-const hasValidation = props.control.validation;
-const validationMessage = props.control.validation?.message;
-
+const label = control.label;
+const options = control.options;
+const hasValidation = control.validation;
+const validationMessage = control.validation?.message;
 </script>
 
 <template>

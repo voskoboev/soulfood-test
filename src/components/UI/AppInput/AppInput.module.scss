@@ -16,3 +16,7 @@
 .errorMessage {
   color: vars.$color-error;
 }
+
+.errorInput {
+  border: 1px solid vars.$color-error;
+}

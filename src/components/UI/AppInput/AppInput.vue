@@ -1,56 +1,57 @@
 <script lang="ts" setup>
 import { ref, computed, watch, useId } from "vue";
+import { useDebounce } from "@vueuse/core";
 import styles from "@/components/UI/AppInput/AppInput.module.scss";
-import { isNumber } from "@/types/guards/isNumber.guard";
+import { DEBOUNCE_DELAY } from "@/components/UI/AppInput/AppInput.data";
+import { useValidation } from "@/composables/useValidation/useValidation.composable";
+import type { ModelRef } from "vue";
 import type { IAppInputProps } from "@/components/UI/AppInput/AppInput.types";
 
-const props = defineProps<IAppInputProps>();
-const input = defineModel<string>({ default: "" });
+const { control } = defineProps<IAppInputProps>();
 
-const isInputValid = ref(false);
+const modelValue = defineModel<string>("data");
+const modelIsValid = defineModel<boolean>("isValid");
 
+const { validateInput } = useValidation();
 const id = useId();
 
-const label = props.control.label;
-const hasValidation = props.control.validation;
-const inputProjectedMinLength = props.control.validation?.minLength?.value;
-const inputProjectedMaxLength = props.control.validation?.maxLength?.value;
+const isFirstTouched = ref(false);
+const debouncedModelValue = useDebounce(modelValue, DEBOUNCE_DELAY);
+
+const label = control.label;
+const validation = control.validation;
 
 const validationTextInputMinLengthMessage =
-  props.control.validation?.minLength?.message;
+  control.validation?.minLength?.message;
 
 const validationTextInputMaxLengthMessage =
-  props.control.validation?.maxLength?.message;
+  control.validation?.maxLength?.message;
 
 const validationPasswordInputMinLengthMessage =
-  props.control.validation?.minLength?.message;
+  control.validation?.minLength?.message;
 
-const isTextInput = computed(() => props.control.type === "text");
-const isEmailInput = computed(() => props.control.type === "email");
-const isPasswordInput = computed(() => props.control.type === "password");
+const isTextInput = computed(() => control.type === "text");
+const isEmailInput = computed(() => control.type === "email");
+const isPasswordInput = computed(() => control.type === "password");
 
-const validateInput = () => {
-  const hasMinLength = isNumber(inputProjectedMinLength);
-  const hasMaxLength = isNumber(inputProjectedMaxLength);
+const inputCssClasses = computed(() => [
+  styles.input,
+  { [styles.errorInput]: !modelIsValid.value && isFirstTouched.value },
+]);
 
-  if (!hasMinLength && !hasMaxLength) {
-    isInputValid.value = true;
-    return;
-  }
+if (validation) {
+  watch(debouncedModelValue, () => {
+    if (!isFirstTouched.value) {
+      isFirstTouched.value = true;
+    }
 
-  const isValidByMinLength =
-    !hasMinLength || input.value.length >= inputProjectedMinLength;
+    validateInput({
+      validation,
+      modelValue: modelValue as ModelRef<string>,
+      modelIsValid: modelIsValid as ModelRef<boolean>,
+    });
 
-  const isValidByMaxLength =
-    !hasMaxLength || input.value.length <= inputProjectedMaxLength;
-
-  isInputValid.value = isValidByMinLength && isValidByMaxLength;
-};
-
-if (hasValidation) {
-  watch(input, () => {
-    validateInput();
-    console.log("input data", input.value);
+    console.log("input data", modelValue.value);
   });
 }
 </script>
@@ -62,24 +63,27 @@ if (hasValidation) {
     </label>
     <input
       :id="id"
-      :class="styles.input"
-      :type="props.control.type"
-      v-model.trim="input"
+      :class="inputCssClasses"
+      :type="control.type"
+      v-model.trim="modelValue"
     />
-    <div v-if="hasValidation">
-      <span :class="styles.errorMessage" v-if="isTextInput && !isInputValid">
+    <div v-if="validation">
+      <span
+        :class="styles.errorMessage"
+        v-if="isFirstTouched && isTextInput && !modelIsValid"
+      >
         {{ validationTextInputMinLengthMessage }}.
         {{ validationTextInputMaxLengthMessage }}
       </span>
       <span
         :class="styles.errorMessage"
-        v-else-if="isEmailInput && !isInputValid"
+        v-else-if="isEmailInput && !modelIsValid"
       >
-        {{ props.control.validation?.message }}
+        {{ control.validation?.pattern?.message }}
       </span>
       <span
         :class="styles.errorMessage"
-        v-else-if="isPasswordInput && !isInputValid"
+        v-else-if="isPasswordInput && !modelIsValid"
       >
         {{ validationPasswordInputMinLengthMessage }}
       </span>

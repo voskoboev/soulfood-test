@@ -2,21 +2,47 @@
 import { computed } from "vue";
 import type { IAppFormControlProps } from "@/components/AppFormControl/AppFormControl.types";
 
-const props = defineProps<IAppFormControlProps>();
+const { control } = defineProps<IAppFormControlProps>();
 
-const isTextInput = computed(() => props.control.type === "text");
-const isEmailInput = computed(() => props.control.type === "email");
-const isPasswordInput = computed(() => props.control.type === "password");
-const isSelect = computed(() => props.control.type === "select");
-const isCheckbox = computed(() => props.control.type === "checkbox");
-const isSubmitButton = computed(() => props.control.type === "submit");
+const modelValue = defineModel<string>("data");
+const modelIsValid = defineModel<boolean>("isValid");
+
+const isTextInput = computed(() => control.type === "text");
+const isEmailInput = computed(() => control.type === "email");
+const isPasswordInput = computed(() => control.type === "password");
+const isSelect = computed(() => control.type === "select");
+const isCheckbox = computed(() => control.type === "checkbox");
 </script>
 
 <template>
-  <AppInput v-if="isTextInput" :control="props.control" />
-  <AppInput v-else-if="isEmailInput" :control="props.control" />
-  <AppInput v-else-if="isPasswordInput" :control="props.control" />
-  <AppSelect v-else-if="isSelect" :control="props.control" />
-  <AppCheckbox v-else-if="isCheckbox" :control="props.control" />
-  <AppButton v-else-if="isSubmitButton" :control="props.control" />
+  <AppInput
+    v-if="isTextInput"
+    :control="control"
+    v-model:data="modelValue"
+    v-model:is-valid="modelIsValid"
+  />
+  <AppInput
+    v-else-if="isEmailInput"
+    :control="control"
+    v-model:data="modelValue"
+    v-model:is-valid="modelIsValid"
+  />
+  <AppInput
+    v-else-if="isPasswordInput"
+    :control="control"
+    v-model:data="modelValue"
+    v-model:is-valid="modelIsValid"
+  />
+  <AppSelect
+    v-else-if="isSelect"
+    :control="control"
+    v-model:data="modelValue"
+    v-model:is-valid="modelIsValid"
+  />
+  <AppCheckbox
+    v-else-if="isCheckbox"
+    :control="control"
+    v-model:data="modelValue"
+    v-model:is-valid="modelIsValid"
+  />
 </template>
