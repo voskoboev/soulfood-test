@@ -1,5 +1,6 @@
 import { isNumber } from "@/types/guards/isNumber.guard";
-import type { IUseValidationParams } from "@/composables/useValidation/validateInput.types";
+import type { IUseValidationParams } from "@/composables/useValidation/useValidation.types";
+import { isRegEx } from "@/types/guards/isRegEx.guard";
 
 export function useValidation() {
   const validateInput = ({
@@ -9,14 +10,20 @@ export function useValidation() {
   }: IUseValidationParams) => {
     const inputProjectedMinLength = validation?.minLength?.value;
     const inputProjectedMaxLength = validation?.maxLength?.value;
+    const inputPattern = validation?.pattern?.value;
 
     const hasMinLength = isNumber(inputProjectedMinLength);
     const hasMaxLength = isNumber(inputProjectedMaxLength);
+    const hasRegExp = isRegEx(inputPattern);
 
-    if (!hasMinLength && !hasMaxLength) {
+    if (!hasMinLength && !hasMaxLength && !hasRegExp) {
       modelIsValid.value = true;
       return;
     }
+
+    const isValidByPattern =
+      !hasRegExp ||
+      (hasRegExp && new RegExp(inputPattern).test(modelValue.value));
 
     const isValidByMinLength =
       !hasMinLength || modelValue.value.length >= inputProjectedMinLength;
@@ -24,7 +31,8 @@ export function useValidation() {
     const isValidByMaxLength =
       !hasMaxLength || modelValue.value.length <= inputProjectedMaxLength;
 
-    modelIsValid.value = isValidByMinLength && isValidByMaxLength;
+    modelIsValid.value =
+      isValidByMinLength && isValidByMaxLength && isValidByPattern;
   };
 
   const validateSelect = () => {};

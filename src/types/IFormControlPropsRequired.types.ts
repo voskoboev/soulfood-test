@@ -1,6 +1,6 @@
 import type { TFormControlTypes } from "@/types/TFormControlTypes.types";
 
-export interface IRequiredFormControlProps {
+export interface IFormControlPropsRequired {
   type: TFormControlTypes;
   label: string;
 }

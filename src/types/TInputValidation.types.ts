@@ -12,4 +12,4 @@ export type TInputValidation = {
     message: string;
   };
   message?: string;
-} | null;
+};

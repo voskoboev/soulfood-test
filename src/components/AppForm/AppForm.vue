@@ -1,53 +1,57 @@
 <script lang="ts" setup>
-import { ref, watchEffect } from "vue";
+import { ref, computed, useTemplateRef, watchEffect } from "vue";
 import AppFormControl from "@/components/AppFormControl/AppFormControl.vue";
 import styles from "@/components/AppForm/AppForm.module.scss";
 import type { IAppFormProps } from "@/components/AppForm/AppForm.types";
 import type { TFormControlReactive } from "@/types/TFormControlReactive.types";
 
-const { controls, registerUser } = defineProps<IAppFormProps>();
+const { controls, getFormData } = defineProps<IAppFormProps>();
 
-const controlsReactive: TFormControlReactive[] = controls.map(
+const form = useTemplateRef("form");
+
+const reactiveControls: TFormControlReactive[] = controls.map(
   (control, idx) => ({
     ...control,
     id: idx,
     data: ref(""),
-    isValid: control.validation ? ref(false) : ref(true),
+    isValid: control.validation || control.required ? ref(false) : ref(true),
   })
 );
 
 const isSubmitButtonDisabled = ref(true);
 
-console.log("controlsReactive", controlsReactive);
+const isRequired = computed(() =>
+  reactiveControls.some((control) => control.required)
+);
+
+console.log("reactiveControls", reactiveControls);
 
 watchEffect(() => {
-  isSubmitButtonDisabled.value = !controlsReactive.every(
+  isSubmitButtonDisabled.value = !reactiveControls.every(
     (control) => control.isValid.value
   );
 });
 
-const handleRegisterUser = () => {
-  const newUser = {
-    name: "",
-    email: "",
-    password: "",
-    role: "",
-    privacyPolicy: true,
-  };
+const handleSubmitForm = () => {
+  if (!form.value) {
+    throw new Error("Form template ref is missing.");
+  }
 
-  registerUser(newUser);
+  const formData = new FormData(form.value);
+  const data = Object.fromEntries(formData.entries());
+  getFormData(data);
 };
 </script>
 
 <template>
   <form
     novalidate
-    ref="form"
     :class="styles.form"
-    @submit.prevent="handleRegisterUser"
+    @submit.prevent="handleSubmitForm"
+    ref="form"
   >
     <AppFormControl
-      v-for="control in controlsReactive"
+      v-for="control in reactiveControls"
       :control="control"
       :key="control.id"
       v-model:data="control.data.value"
@@ -56,5 +60,6 @@ const handleRegisterUser = () => {
     <AppButton type="submit" :disabled="isSubmitButtonDisabled">
       Отправить форму
     </AppButton>
+    <div v-if="isRequired">Поля со * обазятельны к заполнению</div>
   </form>
 </template>

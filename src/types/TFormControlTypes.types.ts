@@ -3,5 +3,4 @@ export type TFormControlTypes =
   | "email"
   | "password"
   | "select"
-  | "checkbox"
-  | "submit";
+  | "checkbox";

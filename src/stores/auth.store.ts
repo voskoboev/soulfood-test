@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
-import type { IUser } from "@/types/IUser.types";
 
 export const useAuthStore = defineStore("auth", () => {
-  const handleRegisterUser = (user: IUser) => {
+  const handleRegisterUser = (user: Record<string, FormDataEntryValue>) => {
     console.log("user", user);
   };
 

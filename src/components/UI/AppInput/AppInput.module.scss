@@ -13,6 +13,10 @@
   border-radius: vars.$rounding;
 }
 
+.helpMessage {
+  font-size: 14px;
+}
+
 .errorMessage {
   color: vars.$color-error;
 }

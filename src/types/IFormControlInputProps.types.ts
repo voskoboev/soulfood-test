@@ -1,10 +1,10 @@
-import type { IRequiredFormControlProps } from "@/types/IRequiredFormControlProps.types";
-import type { TInputValidation } from "./TInputValidation.types";
+import type { TInputValidation } from "@/types/TInputValidation.types";
+import type { IFormControlPropsRequired } from "@/types/IFormControlPropsRequired.types";
 
-export interface IFormControlInputProps extends IRequiredFormControlProps {
+export interface IFormControlInputProps extends IFormControlPropsRequired {
   name?: string;
   placeholder?: string;
-  helpMessage: string,
+  helpMessage?: string;
   required?: boolean;
   validation?: TInputValidation;
 }
