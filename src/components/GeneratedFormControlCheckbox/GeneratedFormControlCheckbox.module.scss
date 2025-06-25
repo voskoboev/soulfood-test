@@ -7,15 +7,14 @@
   gap: 10px;
 }
 
-.select {
-  padding: 10px 20px;
-  border: 1px solid vars.$color-tertiary;
-  border-radius: vars.$rounding;
+.input {
+  width: 20px;
+  height: 20px;
   cursor: pointer;
 }
 
-.placeholderOption {
-  display: none;
+.helpMessage {
+  font-size: 14px;
 }
 
 .errorMessage {

@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { ref, computed, useTemplateRef, watchEffect } from "vue";
-import AppFormControl from "@/components/AppFormControl/AppFormControl.vue";
-import styles from "@/components/AppForm/AppForm.module.scss";
-import type { IAppFormProps } from "@/components/AppForm/AppForm.types";
+import GeneratedFormControl from "@/components/GeneratedFormControl/GeneratedFormControl.vue";
+import styles from "@/components/GeneratedForm/GeneratedForm.module.scss";
 import type { TFormControlReactive } from "@/types/TFormControlReactive.types";
+import type { IGeneratedFormProps } from "@/components/GeneratedForm/GeneratedForm.types";
 
-const { controls, getFormData } = defineProps<IAppFormProps>();
+const { controls, getFormData } = defineProps<IGeneratedFormProps>();
 
 const form = useTemplateRef("form");
 
@@ -13,7 +13,7 @@ const reactiveControls: TFormControlReactive[] = controls.map(
   (control, idx) => ({
     ...control,
     id: idx,
-    data: ref(""),
+    data: control.type === "checkbox" ? ref(false) : ref(""),
     isValid: control.validation || control.required ? ref(false) : ref(true),
   })
 );
@@ -33,11 +33,7 @@ watchEffect(() => {
 });
 
 const handleSubmitForm = () => {
-  if (!form.value) {
-    throw new Error("Form template ref is missing.");
-  }
-
-  const formData = new FormData(form.value);
+  const formData = new FormData(form.value!);
   const data = Object.fromEntries(formData.entries());
   getFormData(data);
 };
@@ -46,11 +42,11 @@ const handleSubmitForm = () => {
 <template>
   <form
     novalidate
+    ref="form"
     :class="styles.form"
     @submit.prevent="handleSubmitForm"
-    ref="form"
   >
-    <AppFormControl
+    <GeneratedFormControl
       v-for="control in reactiveControls"
       :control="control"
       :key="control.id"
@@ -60,6 +56,6 @@ const handleSubmitForm = () => {
     <AppButton type="submit" :disabled="isSubmitButtonDisabled">
       Отправить форму
     </AppButton>
-    <div v-if="isRequired">Поля со * обазятельны к заполнению</div>
+    <div v-if="isRequired">Поля со * обязательны к заполнению</div>
   </form>
 </template>

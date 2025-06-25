@@ -23,6 +23,7 @@
 
   &:disabled {
     background-color: vars.$color-disabled;
+    box-shadow: none;
     cursor: not-allowed;
   }
 }

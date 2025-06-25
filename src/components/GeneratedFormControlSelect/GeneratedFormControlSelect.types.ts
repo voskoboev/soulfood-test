@@ -1,5 +1,5 @@
 import type { IFormControlSelectProps } from "@/types/IFormControlSelectProps.types";
 
-export interface IAppSelectProps {
+export interface IGeneratedFormControlSelectProps {
   control: IFormControlSelectProps;
 }

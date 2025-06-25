@@ -1,5 +1,5 @@
 import type { TFormControl } from "@/types/TFormControl.types";
 
-export interface IAppFormControlProps {
+export interface IGeneratedFormControlProps {
   control: TFormControl;
 }

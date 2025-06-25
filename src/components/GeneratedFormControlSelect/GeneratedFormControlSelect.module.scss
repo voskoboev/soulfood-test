@@ -7,10 +7,19 @@
   gap: 10px;
 }
 
-.input {
-  width: 20px;
-  height: 20px;
+.select {
+  padding: 10px 20px;
+  border: 1px solid vars.$color-tertiary;
+  border-radius: vars.$rounding;
   cursor: pointer;
+}
+
+.placeholderOption {
+  display: none;
+}
+
+.helpMessage {
+  font-size: 14px;
 }
 
 .errorMessage {

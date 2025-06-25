@@ -3,6 +3,6 @@ import type { TFormControl } from "./TFormControl.types";
 
 export type TFormControlReactive = TFormControl & {
   id: number;
-  data: Ref<string>;
+  data: Ref<string> | Ref<boolean>;
   isValid: Ref<boolean>;
 };

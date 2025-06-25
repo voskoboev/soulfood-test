@@ -4,7 +4,6 @@ export interface IFormControlCheckbox extends IFormControlPropsRequired {
   name?: string;
   checked?: boolean;
   required?: boolean;
-  validation?: {
-    message: string;
-  };
+  helpMessage?: string;
+  validation?: any;
 }

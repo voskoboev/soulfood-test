@@ -1,11 +1,14 @@
 <script lang="ts" setup>
 import { computed } from "vue";
-import type { IAppFormControlProps } from "@/components/AppFormControl/AppFormControl.types";
+import GeneratedFormControlInput from "@/components/GeneratedFormControlInput/GeneratedFormControlInput.vue";
+import GeneratedFormControlSelect from "@/components/GeneratedFormControlSelect/GeneratedFormControlSelect.vue";
+import GeneratedFormControlCheckbox from "@/components/GeneratedFormControlCheckbox/GeneratedFormControlCheckbox.vue";
+import type { IGeneratedFormControlProps } from "@/components/GeneratedFormControl/GeneratedFormControl.types";
 
-const { control } = defineProps<IAppFormControlProps>();
+const { control } = defineProps<IGeneratedFormControlProps>();
 
-const modelValue = defineModel<string>("data");
-const modelIsValid = defineModel<boolean>("isValid");
+const modelValue = defineModel<string | boolean>("data", { required: true });
+const modelIsValid = defineModel<boolean>("isValid", { required: true });
 
 const isTextInput = computed(() => control.type === "text");
 const isEmailInput = computed(() => control.type === "email");
@@ -15,31 +18,31 @@ const isCheckbox = computed(() => control.type === "checkbox");
 </script>
 
 <template>
-  <AppInput
+  <GeneratedFormControlInput
     v-if="isTextInput"
     :control="control"
     v-model:data="modelValue"
     v-model:is-valid="modelIsValid"
   />
-  <AppInput
+  <GeneratedFormControlInput
     v-else-if="isEmailInput"
     :control="control"
     v-model:data="modelValue"
     v-model:is-valid="modelIsValid"
   />
-  <AppInput
+  <GeneratedFormControlInput
     v-else-if="isPasswordInput"
     :control="control"
     v-model:data="modelValue"
     v-model:is-valid="modelIsValid"
   />
-  <AppSelect
+  <GeneratedFormControlSelect
     v-else-if="isSelect"
     :control="control"
     v-model:data="modelValue"
     v-model:is-valid="modelIsValid"
   />
-  <AppCheckbox
+  <GeneratedFormControlCheckbox
     v-else-if="isCheckbox"
     :control="control"
     v-model:data="modelValue"

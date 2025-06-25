@@ -1,11 +1,12 @@
 import type { IFormControlPropsRequired } from "@/types/IFormControlPropsRequired.types";
-import type { IFormControlSelectOption } from "./IFormControlSelectOption.types";
 
 export interface IFormControlSelectProps extends IFormControlPropsRequired {
-  options: IFormControlSelectOption[];
+  options: {
+    text: string;
+    value: string;
+  }[];
   name?: string;
   required?: boolean;
-  validation?: {
-    message: string;
-  };
+  helpMessage?: string;
+  validation?: any;
 }
