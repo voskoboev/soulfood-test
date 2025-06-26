@@ -1,4 +1,4 @@
-# SoulFood Test
+# FoodSoul Test
 
 ### Команда для запуска
 npm run dev
