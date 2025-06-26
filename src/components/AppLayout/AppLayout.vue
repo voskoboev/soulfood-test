@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import AppForm from "@/components/AppForm/AppForm.vue";
+import GeneratedForm from "@/components/GeneratedForm/GeneratedForm.vue";
 import styles from "@/components/AppLayout/AppLayout.module.scss";
 import { useAuthStore } from "@/stores/auth.store";
-import type { TFormControl } from "@/types/TFormControl.types";
+import type { TGeneratedFormControl } from "@/types/TGeneratedFormControl.types";
 
-const FORM_CONTROLS: TFormControl[] = [
+const FORM_CONTROLS: TGeneratedFormControl[] = [
   {
     type: "text",
     label: "Логин",
@@ -25,6 +25,20 @@ const FORM_CONTROLS: TFormControl[] = [
   },
 
   {
+    type: "text",
+    label: "Имя",
+    name: "first-name",
+    required: true,
+  },
+
+  {
+    type: "text",
+    label: "Фамилия",
+    name: "last-name",
+    required: false,
+  },
+
+  {
     type: "password",
     label: "Пароль",
     name: "password",
@@ -42,7 +56,7 @@ const FORM_CONTROLS: TFormControl[] = [
     type: "email",
     label: "Email",
     name: "email",
-    required: false,
+    required: true,
     validation: {
       pattern: {
         value: "^\\S+@\\S+\\.\\S+$",
@@ -55,6 +69,8 @@ const FORM_CONTROLS: TFormControl[] = [
     label: "Роль",
     type: "select",
     name: "role",
+    required: true,
+    helpMessage: "Выберите одно из значений",
     options: [
       {
         text: "Пользователь",
@@ -65,8 +81,6 @@ const FORM_CONTROLS: TFormControl[] = [
         value: "admin",
       },
     ],
-    required: true,
-    helpMessage: "Выберите одно из значений",
   },
 
   {
@@ -85,7 +99,7 @@ const authStore = useAuthStore();
 
 <template>
   <div class="container" :class="styles.layout">
-    <AppForm
+    <GeneratedForm
       :controls="FORM_CONTROLS"
       :get-form-data="authStore.handleRegisterUser"
     />

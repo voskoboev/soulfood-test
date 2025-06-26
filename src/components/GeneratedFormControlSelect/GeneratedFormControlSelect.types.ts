@@ -1,5 +1,5 @@
-import type { IFormControlSelectProps } from "@/types/IFormControlSelectProps.types";
+import type { IGeneratedFormControlSelect } from "@/types/IGeneratedFormControlSelect.types";
 
 export interface IGeneratedFormControlSelectProps {
-  control: IFormControlSelectProps;
+  control: IGeneratedFormControlSelect;
 }

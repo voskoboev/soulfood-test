@@ -1,5 +1,5 @@
-import type { IFormControlCheckbox } from "@/types/IFormControlCheckboxProps.types";
+import type { IGeneratedFormControlCheckbox } from "@/types/IGeneratedFormControlCheckbox.types";
 
 export interface IGeneratedFormControlCheckboxProps {
-  control: IFormControlCheckbox;
+  control: IGeneratedFormControlCheckbox;
 }

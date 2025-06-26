@@ -1,4 +1,7 @@
 @use "@/assets/styles/vars.styles.scss";
+@use "@/assets/styles/mixins.styles.scss";
+
+@include mixins.control-messages;
 
 .wrapper {
   display: flex;
@@ -16,12 +19,4 @@
 
 .placeholderOption {
   display: none;
-}
-
-.helpMessage {
-  font-size: 14px;
-}
-
-.errorMessage {
-  color: vars.$color-error;
 }

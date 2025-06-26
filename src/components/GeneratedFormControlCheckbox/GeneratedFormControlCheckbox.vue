@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { watch, useId } from "vue";
+import { watch, useId, ref } from "vue";
 import styles from "@/components/GeneratedFormControlCheckbox/GeneratedFormControlCheckbox.module.scss";
 import type { IGeneratedFormControlCheckboxProps } from "@/components/GeneratedFormControlCheckbox/GeneratedFormControlCheckbox.types";
 
 const { control } = defineProps<IGeneratedFormControlCheckboxProps>();
 
-const modelValue = defineModel<boolean>("data", { required: true });
 const modelIsValid = defineModel<boolean>("isValid", { required: true });
 
+const checkboxValue = ref(false);
 const id = useId();
 const label = control.label;
 const type = control.type;
@@ -17,13 +17,17 @@ const isRequired = control.required;
 const helpMessage = control.helpMessage;
 
 if (isChecked) {
-  modelValue.value = true;
+  checkboxValue.value = true;
 }
 
 if (isRequired) {
-  watch(modelValue, () => {
-    modelIsValid.value = modelValue.value;
-  });
+  watch(
+    checkboxValue,
+    () => {
+      modelIsValid.value = checkboxValue.value;
+    },
+    { immediate: true }
+  );
 }
 </script>
 
@@ -35,7 +39,7 @@ if (isRequired) {
       :class="styles.input"
       :type="type"
       :name="name"
-      v-model="modelValue"
+      v-model="checkboxValue"
     />
     <div v-if="isRequired">
       <span :class="styles.helpMessage">

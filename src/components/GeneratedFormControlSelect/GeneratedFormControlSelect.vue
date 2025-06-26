@@ -1,23 +1,23 @@
 <script lang="ts" setup>
-import { watch, useId } from "vue";
+import { watch, useId, ref } from "vue";
 import styles from "@/components/GeneratedFormControlSelect/GeneratedFormControlSelect.module.scss";
 import type { IGeneratedFormControlSelectProps } from "@/components/GeneratedFormControlSelect/GeneratedFormControlSelect.types";
 
 const { control } = defineProps<IGeneratedFormControlSelectProps>();
 
-const modelValue = defineModel<boolean>("data", { required: true });
 const modelIsValid = defineModel<boolean>("isValid", { required: true });
 
+const selectValue = ref("");
 const id = useId();
 const label = control.label;
 const name = control.name;
-const options = control.options;
-const isRequired = control.required;
 const helpMessage = control.helpMessage;
+const isRequired = control.required;
+const options = control.options;
 
 if (isRequired) {
-  watch(modelValue, () => {
-    modelIsValid.value = modelValue.value.length > 0;
+  watch(selectValue, () => {
+    modelIsValid.value = !!selectValue.value;
   });
 }
 </script>
@@ -25,8 +25,8 @@ if (isRequired) {
 <template>
   <div :class="styles.wrapper">
     <label :for="id"> {{ label }} <span v-if="isRequired">*</span> </label>
-    <select :id="id" :class="styles.select" :name="name" v-model="modelValue">
-      <option :class="styles.placeholderOption" value="">
+    <select :id="id" :class="styles.select" :name="name" v-model="selectValue">
+      <option value="" :class="styles.placeholderOption">
         Выберите значение из списка
       </option>
       <option v-for="option in options" :value="option.value">

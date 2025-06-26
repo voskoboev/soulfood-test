@@ -1,6 +1,6 @@
-import type { TFormControl } from "@/types/TFormControl.types";
+import type { TGeneratedFormControl } from "@/types/TGeneratedFormControl.types";
 
 export interface IGeneratedFormProps {
-  controls: TFormControl[];
+  controls: TGeneratedFormControl[];
   getFormData: (data: Record<string, FormDataEntryValue>) => void;
 }

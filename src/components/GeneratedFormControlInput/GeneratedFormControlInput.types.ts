@@ -1,5 +1,5 @@
-import type { IFormControlInputProps } from "@/types/IFormControlInputProps.types";
+import type { IGeneratedFormControlInput } from "@/types/IGeneratedFormControlInput.types";
 
 export interface IGeneratedFormControlInputProps {
-  control: IFormControlInputProps;
+  control: IGeneratedFormControlInput;
 }

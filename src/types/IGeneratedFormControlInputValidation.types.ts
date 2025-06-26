@@ -1,4 +1,4 @@
-export type TInputValidation = {
+export interface IGeneratedFormControlInputValidation {
   minLength?: {
     value: number;
     message: string;
@@ -11,5 +11,4 @@ export type TInputValidation = {
     value: string;
     message: string;
   };
-  message?: string;
-};
+}
